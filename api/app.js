@@ -21,17 +21,6 @@ app.use(express.json());
 
 app.use(cors() );
 
-//testing database connection
-(async() => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection succesful');
-  } catch (err) {
-    console.log('Oh nooo! Unable to connect to database', err);
-  }
-})();
-
-
 
 // setup a friendly greeting for the root route
 app.get('/', (req, res) => {
@@ -65,7 +54,23 @@ app.use((err, req, res, next) => {
 // set our port
 app.set('port', process.env.PORT || 5000);
 
+//testing database connection
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection succesful');
+
+  } catch (error) {
+    console.log('Oh nooo! Unable to connect to database', error);
+  }
+})();
+
+
 // start listening on our port
-const server = app.listen(app.get('port'), () => {
-  console.log(`Express server is listening on port ${server.address().port}`);
-});
+sequelize.sync()
+  .then( () => {
+    const server = app.listen(app.get('port'), () => {
+      console.log(`Express server is listening on port ${server.address().port}`);
+    });
+  });
+
