@@ -3,7 +3,7 @@ import { appContext } from '../Context';
 import { Link, useHistory } from 'react-router-dom';
 import ValidationError from './ValidationError';
 
-const UserSignUp = () => {
+export default function UserSignUp() {
 
     let [firstName, setFirstName] = useState('');
     let [lastName, setLastName] = useState('');
@@ -71,20 +71,20 @@ const UserSignUp = () => {
                 ? errors.map((error, index) => <ValidationError key={index} data={errors} />)
                 : <h1> </h1>
             }
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="firstName">First Name</label>
-                <input onChange={handleChange} id="firstName" name="firstName" type="text" value={firstName} />
+            <form onSubmit= {handleSubmit} >
+                <label htmlFor="firstName"> First Name</label>
+                <input onChange= {handleChange} id="firstName" name="firstName" type="text" value={firstName} />
 
-                <label htmlFor="lastName">Last Name</label>
+                <label htmlFor= "lastName"> Last Name</label>
                 <input onChange={handleChange} id="lastName" name="lastName" type="text" value={lastName} />
 
-                <label htmlFor="emailAddress">Email Address</label>
+                <label htmlFor= "emailAddress"> Email Address</label>
                 <input onChange={handleChange} id="emailAddress" name="emailAddress" type="email" value={email} />
 
-                <label htmlFor="password">Password</label>
+                <label htmlFor= "password"> Password</label>
                 <input onChange={handleChange} id="password" name="password" type="password" value={password} />
 
-                <button className="button" type="submit">Sign Up</button>
+                <button className= "button" type="submit"> Sign Up</button>
                 <button onClick={routerChange} className="button button-secondary">Cancel</button>
             </form>
             <Link to="/signin">Already have an account? Click here to sign in!</Link>
@@ -93,4 +93,3 @@ const UserSignUp = () => {
 
 }    
 
-export default UserSignUp;

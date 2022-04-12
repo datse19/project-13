@@ -1,9 +1,9 @@
 import { appContext } from "../Context";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 
-const UserSignOut = () => {
+export default function UserSignOut() {
     const {actions} = useContext(appContext);
     const history = useHistory();
 
@@ -16,6 +16,3 @@ const UserSignOut = () => {
         null
     );
 }
-
-
-export default UserSignOut;

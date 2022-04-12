@@ -1,17 +1,19 @@
 import React, { useState, useContext } from 'react';
-import { appContext } from '../Context';
-import { useHistory} from 'react-router-dom';
-import ValidationError from './ValidationError';
+import { Context } from '../Context';
+import { useNavigate} from 'react-router-dom';
 
-const CreateCourse = () => {
+//function creates a new course
+export default function CreateCourse() {
+
+    //creating state
     const [title, setTitle] = useState('');
-    const [desc, setDesc] = useState('');
-    const [time, setTime] = useState('');
-    const [materials, setMaterials] = useState('');
+    const [description, setDesc] = useState('');
+    const [estimatedTime, setTime] = useState('');
+    const [materialsNeeded, setMaterials] = useState('');
     const [errors, setErrors] = useState( [] );
 
-    const { actions } = useContext(appContext);
-    const history = useHistory();
+    const context = useContext(Context);
+    let history = useNavigate();
 
     const routeChange = () => {
         history.push('/');
@@ -98,6 +100,3 @@ const CreateCourse = () => {
         </div>
     );
 }
-
-
-export default CreateCourse;

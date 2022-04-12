@@ -35,7 +35,7 @@ export default function UserSignIn() {
     }
 
     return (
-        <div className='form--centered' >
+        <div className='form--centered'>
             {
                 fail
                 ? (
@@ -50,13 +50,13 @@ export default function UserSignIn() {
 
             <h2>Sign In</h2>
             <form onSubmit={handleSubmit} >
-                <label htmlFor='emailAddress' > Email Address </label>
-                <input onChange={handleChange} id='emailAddress' name='emailAddress' type='email' value={email} ></input>
+                <label htmlFor='emailAddress'> Email Address </label>
+                <input onChange={handleChange} id='emailAddress' name='emailAddress' type='email' value={email} />
                 <label htmlFor='password' > Password</label>
-                <input onChange={handleChange} id='password' name='password' type='password' value={password} ></input>
+                <input onChange={handleChange} id='password' name='password' type='password' value={password} />
 
-                <button className='button' type='submit' >Sign In</button>
-                <button className='button button-secondary' onClick={routeChange} >Cancel</button>
+                <button className='button' type='submit'> Sign In</button>
+                <button className='button button-secondary' onClick={routeChange}> Cancel</button>
 
             </form>
             <Link to='/signup' >Don't have an account? Click here to sign up </Link>

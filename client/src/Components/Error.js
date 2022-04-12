@@ -1,6 +1,7 @@
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const ErrorPage = () => {
+export default function Error() {
 
     const history = useHistory ();
 
@@ -19,5 +20,3 @@ const ErrorPage = () => {
     );
 }
 
-
-export default ErrorPage;

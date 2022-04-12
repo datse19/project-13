@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { appContext } from '../Context';
-import { useHistory } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import ValidationError from './ValidationError';
 
 const UpdateCourse = (props) => {
@@ -15,7 +15,7 @@ const UpdateCourse = (props) => {
     const [id, setId] = useState('');
     const [course, setCourse] = useState('');
 
-    const history = useHistory();
+    const history = useNavigate ();
     const routeChange = () => {
         history.push(`/courses/${id}`);
     }
