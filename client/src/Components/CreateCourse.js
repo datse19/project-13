@@ -17,11 +17,11 @@ export default function CreateCourse() {
 
 
     //Function creates new course in the API
-    const handleSubmit = async (e) => {
+    async function handleSubmit(e){
         e.preventDefault();
         setErrors( [] );
         
-        const authCred = btoa( `${context.authenticatedUser.emailAddress} : ${context.authenticatedPassword}`);
+        const authCred = btoa( `${context.authenticatedUser.emailAddress}:${context.authenticatedPassword}`);
         const res = await fetch('http://localhost:5000/api/courses', {
             method: 'POST',
             headers: {
@@ -93,5 +93,5 @@ export default function CreateCourse() {
                 </form>
             </div>
         </main>
-    );
+    )
 }  
