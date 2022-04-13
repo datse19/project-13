@@ -1,5 +1,4 @@
 'use strict';
-
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
@@ -15,7 +14,7 @@ module.exports = (sequelize) => {
                 notEmpty: {
                     msg: 'Please provide a valid Course title.'
                 }
-            }
+            },
         },
         description: {
             type: Sequelize.TEXT,
@@ -27,7 +26,7 @@ module.exports = (sequelize) => {
                 notEmpty: {
                     msg: 'Please provide a Course Description.'
                 }
-            }
+            },
         },
         estimatedTime: {
             type: Sequelize.STRING
@@ -38,7 +37,7 @@ module.exports = (sequelize) => {
     }, {sequelize});
 
     Course.associate = (models) => {
-        Course.belongsTo (models.User, {
+        Course.belongsTo(models.User, {
             foriegnKey: {
                 fieldName: 'userId',
                 allowNull: false,

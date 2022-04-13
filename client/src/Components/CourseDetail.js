@@ -16,12 +16,12 @@ export default function CourseDetail () {
 
 
     useEffect( () => {
-            axios.get(`http://localhost:5000/api/courses/${id}`)
-                .then(res => {setCourse(res.data);
-                                setUser(res.data.user);
-                                })
-                .catch(err => console.log('Oh No!! Something went wrong fetching the data', err))       
-    }, [id];
+        axios.get(`http://localhost:5000/api/courses/${id}`)
+            .then(res => {setCourse(res.data);
+                            setUser(res.data.user);
+                            })
+            .catch(err => console.log('Oh No!! Something went wrong fetching the data', err))       
+    }, [id])
     
     //Delete the course based on ID
     function deleteCourse (e) {
@@ -47,12 +47,12 @@ export default function CourseDetail () {
         <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    {context.authenticatedUser && context.authenticatedUser.id === courses.userId ? (
+                    {context.authenticatedUser && context.authenticatedUser.id === course.userId ? (
                         <span>
-                            <Link className="button" to={`/courses/${courses.id}/update`}>Update Course</Link>
+                            <Link className="button" to={`/courses/${course.id}/update`}>Update Course</Link>
                             <Link className="button" to="/" onClick={deleteCourse} >Delete Course</Link>
                         </span>
-                    ) : (null)}
+                    ) : null}
                     <Link className = 'button button-secondary' to='/'> Return to List </Link>
                 </div>
             </div>

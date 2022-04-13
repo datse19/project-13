@@ -1,18 +1,13 @@
-import { useContext } from 'react';
-import { appContext } from './Context';
-import { Route, Redirect } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Context } from './Context';
+import { Outlet, Navigate } from "react-router-dom";
 
 
-const PrivateRoute = ( { component: Component, ...rest}) => {
-    const {actions} = useContext(appContext);
+export default function PrivateRoute () {
+    //Grab the authenticated user off of the context
+    let { authenticatedUser } = useContext(Context);
 
-    return (
-        <div>
-            {
-                <Route {...rest} render={props => actions.authUser ? <Component {...props} /> : <Redirect to='/signin' /> } />
-            }
-        </div>
-    )
-};
-
-export default PrivateRoute;
+    //if there is an authenticated user render the outlet
+    //otherwise redirect the user to the '/signin' route
+    return authenticatedUser ? <Outlet /> : <Navigate to="/signin" />;
+}
