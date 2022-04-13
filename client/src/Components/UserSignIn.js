@@ -1,65 +1,55 @@
 import React, {useState, useContext} from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { appContext } from '../Context';
+import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../Context';
 
 export default function UserSignIn() {
+    
 
-    let [email, setEmail ] = useState('');
-    let [password, setpassword] = useState('');
-    let [fail, setFail] = useState(false);
-    const { actions } = useContext (appContext);
+    const context = useContext (Context);
+    let history = useNavigate();
+    
+    //state
+    const [emailAddress, setEmailAddress ] = useState('');
+    const [password, setPassword] = useState('');
 
-    const history = useHistory();
-
-    function handleChange(e) {
-        if(e.target.name === 'emailAddress') {
-            setEmail(e.target.value);
-        } else if (e.target.name === 'password') {
-            setpassword(e.target.value)
-        }
-    }
-
-
-    const handleSubmit = async (e) => {
+    //Obtain the user through context
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const response = await actions.signIn(email, password);
-        if (response.status !== 200) {
-            setFail(true);
-        } else {
-            history.push('/');
-        }
+        context.actions.signIn(emailAddress, password)
+          .then( (user) => {
+            if (user === null) {
+                return {errors: ['Sign in was unsuccessful']};
+            } else {
+                history('/');
+            }
+          })
+          .catch( (error) => {
+              console.log(error);
+              history('/error');
+          })
     }
 
-    function routeChange() {
-        history.push('/');
+    const handleCancel = (e) => {
+        e.preventDefault();
+        history('/');
     }
 
     return (
-        <div className='form--centered'>
-            {
-                fail
-                ? (
-                    <div className='validations--errors' >
-                        <p>Incorrect login, try again.</p>
-                    </div>
-                )
-                : 
-                <>
-                </>
-            }
-
-            <h2>Sign In</h2>
-            <form onSubmit={handleSubmit} >
-                <label htmlFor='emailAddress'> Email Address </label>
-                <input onChange={handleChange} id='emailAddress' name='emailAddress' type='email' value={email} />
-                <label htmlFor='password' > Password</label>
-                <input onChange={handleChange} id='password' name='password' type='password' value={password} />
-
-                <button className='button' type='submit'> Sign In</button>
-                <button className='button button-secondary' onClick={routeChange}> Cancel</button>
-
-            </form>
-            <Link to='/signup' >Don't have an account? Click here to sign up </Link>
+        <div>
+            <main>
+                <div className='form--centered' >
+                    <h2>Sign In</h2>
+                    <form onSubmit={handleSubmit} >
+                        <label htmlFor='emailAddress'> Email Address </label>
+                        <input onChange={(e) => setEmailAddress(e.target.value)} id='emailAddress' name='emailAddress' type='email' value={emailAddress} required/>
+                        <label htmlFor='password' > Password</label>
+                        <input onChange={(e) => setPassword(e.target.value)} id='password' name='password' type='password' value={password} required/>
+                        <button className='button' type='submit' onClick={handleSubmit} > Sign In</button>
+                        <button className='button button-secondary' onClick={handleCancel}> Cancel</button>
+                    </form>
+                    <p>Don't have a user account? Click here to <Link to='/signup' >Sign Up </Link>!</p>
+                </div>
+            </main>
         </div>
     );
 }

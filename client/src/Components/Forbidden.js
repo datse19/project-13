@@ -1,20 +1,15 @@
-import { useHistory } from 'react-router-dom';
+import React from "react";
 
-const Forbidden = () => {
-    const history = useHistory();
-
-    const routeChange = () => {
-        history.push('/');
-    }
+export default function Forbidden() {
 
     return (
-        <div className='wrap' >
-            <h2>Forbidden</h2> 
-            <p>Oh no!! You can't access this page.</p>
-            <button onClick={routeChange} className='button button-secondary' >Return Home</button>
-        </div>
+        <main>
+            <div className='wrap' >
+                <h2>Forbidden</h2> 
+                <p>Oh no!! You can't access this page.</p>
+            </div>
+        </main>
     );
 }
 
 
-export default Forbidden;

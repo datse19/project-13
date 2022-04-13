@@ -1,18 +1,15 @@
-import { appContext } from "../Context";
-import { useContext, useEffect } from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect } from 'react';
+import { Navigate } from "react-router-dom";
+import { Context } from "../Context";
 
-
+//Removes the authenticated user and password from the global state
 export default function UserSignOut() {
-    const {actions} = useContext(appContext);
-    const history = useHistory();
 
-    useEffect( () => {
-        actions.signOut();
-        history.push('/')
-    })
+    const context = useContext(Context);
+
+    useEffect( () => context.actions.signOut() )
 
     return (
-        null
+       <Navigate to='/' />
     );
 }

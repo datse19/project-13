@@ -1,20 +1,8 @@
-import { Link, useHistory } from 'react-router-dom';
+import React from "react";
 
-const NotFound = () => {
-    let history = useHistory();
-
-    const manageRoute = () => {
-        history.push('/');
-    }
-
-    return (
-        <div>
+export default function NotFound() {
+        <div className='wrap' >
             <h2>Not Found</h2>
             <p>Sorry! We couldn't find the course you were searching for.</p>
-            <Link className="button button-secondary" onClick={manageRoute} > Back to home</Link>
         </div>
-    );
 }
-
-
-export default NotFound;

@@ -7,96 +7,91 @@ export default function CreateCourse() {
 
     //creating state
     const [title, setTitle] = useState('');
-    const [description, setDesc] = useState('');
-    const [estimatedTime, setTime] = useState('');
-    const [materialsNeeded, setMaterials] = useState('');
+    const [description, setDescription] = useState('');
+    const [estimatedTime, setEstimatedTime] = useState('');
+    const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState( [] );
 
     const context = useContext(Context);
     let history = useNavigate();
 
-    const routeChange = () => {
-        history.push('/');
-    }
 
-
-    //Function updates the state of the element when user inputs text
-    function handleChange(e) {
-        if (e.target.name === 'courseTitle') {
-            setTitle(e.target.value);
-        } else if (e.target.name === 'courseDesription') {
-            setDesc (e.target.value);
-        } else if (e.target.name === 'estimatedTime') {
-            setTime (e.target.value);
-        } else if (e.target.name === 'materialsNeeded') {
-            setMaterials(e.target.value);
-        }
-    }
-
-    //Function creates an object that holds new data created by the user. 
+    //Function creates new course in the API
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let body = {
-            title: title,
-            description: desc,
-            estimatedTime: time,
-            materialsNeeded: materials
-        };
-      
+        setErrors( [] );
+        
+        const authCred = btoa( `${context.authenticatedUser.emailAddress} : ${context.authenticatedPassword}`);
+        const res = await fetch('http://localhost:5000/api/courses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Basic ${authCred}`, 
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title,
+                description: description, 
+                estimatedTime: estimatedTime, 
+                materialsNeeded: materialsNeeded, 
+                userId: context.authenticatedUser.id}),
+        })
 
-        //Method updates the course after submission and redirects user to detail's course screen. If there's a bad request a error message will be thrown.
-        actions.CreateCourse(body, actions.authUser.emailAddress, actions.authUser.password)
-            .then(response => {
-                if(response.status === 200) {
-                    setTimeout( () => {
-                        routeChange()
-                    }, 500)
-                } else if (response.status === 400) {
-                    response.json().then(data => {
-                        setErrors([data])
-                        console.log(data)
-                    })
-                }
-            })
-            .catch(error => {
-                history.push('/error')
-            })
+        if (res.status === 201) {
+            history('/');
+          } else if (res.status === 401) {
+            history('/forbidden')
+          } else if (res.status === 400) {
+            res.json()
+              .then(data => {
+                setErrors(data.errors)
+              });
+          } else {
+            throw new Error();
+          }
     }
+
+    //Directs the Home page when cancel is clicked 
+    const handleCancel = (e) => {
+        e.preventDefault();
+        history('/');
+    }
+
+    const errorHandler = errors.length ?
+    ( <div className="validation--errors" >
+        <h3> Validation Errors </h3>
+            <ul> {errors.map( (error, i) => {return (<li key={i} > { error } </li>)})} </ul>
+    </div>) : null
 
 
     //Conditional check if there are any errors. If error, then throw error message
-    return ( 
-        <div className="wrap">
-            <h2>Create Course</h2>
-            {
-                (errors.length !== 0)
-                ? errors.map((error, index) => <ValidationError key={index} data={errors} />)
-                : null
-            }
+    return (
+        <main>
+            <div className="wrap">
+                <h2>Create Course</h2>
+               {errorHandler}
+                <form onSubmit={handleSubmit}>
+                    <div className="main--flex">
+                        <div>
+                            <label htmlFor="courseTitle">Course Title</label>
+                            <input id="courseTitle" name="courseTitle" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
 
+                            <p>By {context?.authenticatedUser ? `${context.authenticatedUser.firstName} ${context.authenticatedUser.lastName}` : ''}</p>
 
-            <form onSubmit={handleSubmit}>
-                <div className="main--flex">
-                    <div>
-                        <label htmlFor="courseTitle">Course Title</label>
-                        <input onChange={handleChange} id="courseTitle" name="courseTitle" type="text" value={title} />
+                            <label htmlFor="courseDescription">Course Description</label>
+                            <textarea id="courseDescription" name="courseDescription" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                        </div>
+                        <div>
+                            <label htmlFor="estimatedTime">Estimated Time</label>
+                            <input id="estimatedTime" name="estimatedTime" type="text" value={estimatedTime} onChange={(e) => setEstimatedTime(e.target.value)} />
 
-                        <p>By {actions.authUser.firstName} {actions.authUser.lastName}</p>
-
-                        <label htmlFor="courseDescription">Course Description</label>
-                        <textarea onChange={handleChange} id="courseDescription" name="courseDescription" type="text" value={desc}></textarea>
+                            <label htmlFor="materialsNeeded">Materials Needed</label>
+                            <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={(e) => setMaterialsNeeded(e.target.value)}></textarea>
+                        </div>
                     </div>
-                    <div>
-                        <label htmlFor="estimatedTime">Estimated Time</label>
-                        <input onChange={handleChange} id="estimatedTime" name="estimatedTime" type="text" value={time} />
-
-                        <label htmlFor="materialsNeeded">Materials Needed</label>
-                        <textarea onChange={handleChange} id="materialsNeeded" name="materialsNeeded" type="text" value={materials}></textarea>
-                    </div>
-                </div>
-                <button className="button" type="submit">Create Course</button>
-                <button onClick={routeChange} className="button button-secondary">Cancel</button>
-            </form>
-        </div>
-    );
-}
+                    <button className="button" onClick={handleSubmit}>Create Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+                </form>
+            </div>
+        </main>
+    )
+}  
