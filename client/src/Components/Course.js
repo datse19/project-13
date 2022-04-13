@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 //Function provides a list of course form API
 export default function Course () {

@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export default function NotFound() {
-        <div className='wrap' >
+        <div className="wrap" >
             <h2>Not Found</h2>
             <p>Sorry! We couldn't find the course you were searching for.</p>
         </div>
-}
+};

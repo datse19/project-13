@@ -2,18 +2,18 @@ import React, { useState, useContext } from 'react';
 import { Context } from '../Context';
 import { useNavigate} from 'react-router-dom';
 
-//function creates a new course
+//Function creates a new course
 export default function CreateCourse() {
 
-    //creating state
+    const context = useContext(Context);
+    let history = useNavigate();
+
+    //Creating state
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState( [] );
-
-    const context = useContext(Context);
-    let history = useNavigate();
 
 
     //Function creates new course in the API
@@ -93,5 +93,5 @@ export default function CreateCourse() {
                 </form>
             </div>
         </main>
-    )
+    );
 }  

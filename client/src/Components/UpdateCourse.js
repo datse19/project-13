@@ -6,7 +6,7 @@ import axios from 'axios';
 export default function UpdateCourse () {
     const context = useContext(Context);
 
-    let history = useNavigate ();
+    let history = useNavigate();
     let {id} = useParams()
 
     const [title, setTitle] = useState ('');
@@ -72,7 +72,10 @@ export default function UpdateCourse () {
     (<div className='validation--errors' >
         <h3>Validation Errors</h3>
         <ul>{errors.map((error, i) => {return (<li key={i}>{error}</li>)})}</ul>
-    </div>): null
+    </div>
+    ): (
+        null
+        )
 
 
 
