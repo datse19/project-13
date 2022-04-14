@@ -14,7 +14,7 @@ export default function CourseDetail() {
     const [courses, setCourse] = useState('');
     const [user, setUser] = useState('');
 
- 
+    //Get the course info from the
     useEffect(() => {
         axios.get(`http://localhost:5000/api/courses/${id}`)
             .then(res => {setCourse(res.data);
@@ -25,9 +25,9 @@ export default function CourseDetail() {
     
 
     //Delete the course based on ID
-    function deleteCourse (e) {
+    function deleteCourse(e) {
         e.preventDefault();
-        const authCred = btoa( `${context.authenticatedUser.emailAddress} : ${context.authenticatedPassword}`)
+        const authCred = btoa(`${context.authenticatedUser.emailAddress}:${context.authenticatedPassword}`)
         axios.delete(`http://localhost:5000/api/courses/${id}`, {
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
