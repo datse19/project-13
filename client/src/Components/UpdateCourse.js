@@ -6,8 +6,8 @@ import axios from 'axios';
 export default function UpdateCourse () {
     const context = useContext(Context);
 
-    let history = useNavigate();
-    let {id} = useParams()
+    const navigate = useNavigate();
+    const {id} = useParams()
 
     const [title, setTitle] = useState ('');
     const [description, setDescription] = useState ('');
@@ -34,9 +34,9 @@ export default function UpdateCourse () {
         });
 
         if (res.status === 204) {
-            history('/');
+            navigate('/');
           } else if (res.status === 403) {
-            history('/forbidden');
+            navigate('/forbidden');
           } else if (res.status === 400) {
             res.json()
               .then(data => {
@@ -65,7 +65,7 @@ export default function UpdateCourse () {
     //Function updates the state of the element when user inputs text
     const handleCancel = (e) => {
         e.preventDefault();
-        history(`/courses/${id}`);
+        navigate(`/courses/${id}`);
     }
 
     const errorHandler = errors.length ? 

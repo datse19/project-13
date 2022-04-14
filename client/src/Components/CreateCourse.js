@@ -6,7 +6,7 @@ import { useNavigate} from 'react-router-dom';
 export default function CreateCourse() {
 
     const context = useContext(Context);
-    let history = useNavigate();
+    const navigate = useNavigate();
 
     //Creating state
     const [title, setTitle] = useState('');
@@ -16,7 +16,7 @@ export default function CreateCourse() {
     const [errors, setErrors] = useState( [] );
 
 
-    //Function creates new course in the API
+    //On submit, collects form data into course object and sends it to server via createCourse method for context. If successful, navigates to the list of courses. If unsuccessful, renders validation errors.
     async function handleSubmit(e){
         e.preventDefault();
         setErrors( [] );
@@ -38,23 +38,23 @@ export default function CreateCourse() {
         })
 
         if (res.status === 201) {
-            history('/');
+            navigate('/');
           } else if (res.status === 401) {
-            history('/forbidden')
+            navigate('/forbidden')
           } else if (res.status === 400) {
             res.json()
               .then(data => {
                 setErrors(data.errors)
               });
           } else {
-            throw new Error();
+            Error();
           }
     }
 
     //Directs the Home page when cancel is clicked 
     const handleCancel = (e) => {
         e.preventDefault();
-        history('/');
+        navigate('/');
     }
 
     const errorHandler = errors.length ?
