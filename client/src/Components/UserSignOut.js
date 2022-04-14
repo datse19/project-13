@@ -7,7 +7,9 @@ export default function UserSignOut() {
 
     const context = useContext(Context);
 
-    useEffect( () => context.actions.signOut() )
+    useEffect( () => {
+        context.actions.signOut() 
+    });
 
     return (
        <Navigate to='/' />
