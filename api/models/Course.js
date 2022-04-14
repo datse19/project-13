@@ -3,7 +3,12 @@ const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
     class Course extends Sequelize.Model {}
-    Course.init ({
+    Course.init({
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         title: {
             type: Sequelize.STRING,
             allowNull: false,
@@ -12,7 +17,7 @@ module.exports = (sequelize) => {
                     msg: 'Valid Course Title is required.'
                 },
                 notEmpty: {
-                    msg: 'Please provide a valid Course title.'
+                    msg: 'Please provide a valid Course Title.'
                 }
             },
         },
