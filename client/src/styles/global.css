@@ -21,7 +21,7 @@ p {
     hyphens: auto;
 }
 a {
-    color: rgb(64, 75, 97);
+    color: rgb(100, 120, 161);
     text-decoration: none;
 }
 .wrap {
@@ -30,7 +30,7 @@ a {
     padding: 1rem;
 }
 header {
-    background: #356286;
+    background: #23788d;
     color: #fff;
     padding: 1rem 0;
     margin-bottom: 2rem;
